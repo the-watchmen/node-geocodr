@@ -1,28 +1,26 @@
 import test from 'ava'
+import _ from 'lodash'
 import geocode, {mapzen, nominatim, geocodio} from '../../src'
 
 test('should work with mapzen', async t => {
   const address = 'NY 10021'
   const coordinates = await geocode(address, mapzen)
   t.is(coordinates.length, 2)
-  t.is(coordinates[0], -73.963654)
-  t.is(coordinates[1], 40.768673)
+  t.deepEqual(round(coordinates), [-74.0, 40.8])
 })
 
 test('should work with nominatim', async t => {
   const address = '10021'
   const coordinates = await geocode(address, nominatim)
   t.is(coordinates.length, 2)
-  t.is(coordinates[0], -73.9508885)
-  t.is(coordinates[1], 40.7666562)
+  t.deepEqual(round(coordinates), [-74.0, 40.8])
 })
 
 test('should work with geocodio', async t => {
   const address = '10021'
   const coordinates = await geocode(address, geocodio)
   t.is(coordinates.length, 2)
-  t.is(coordinates[0], -73.960257)
-  t.is(coordinates[1], 40.768823)
+  t.deepEqual(round(coordinates), [-74.0, 40.8])
 })
 
 test('should work with geocodio multi', async t => {
@@ -31,12 +29,10 @@ test('should work with geocodio multi', async t => {
   t.is(coordinates.length, 2)
   const first = coordinates[0]
   t.is(first.length, 2)
-  t.is(first[0], -73.960257)
-  t.is(first[1], 40.768823)
+  t.deepEqual(round(first), [-74.0, 40.8])
   const second = coordinates[1]
   t.is(second.length, 2)
-  t.is(second[0], -72.670887)
-  t.is(second[1], 41.657249)
+  t.deepEqual(round(second), [-72.7, 41.7])
 })
 
 test('should fail gracefully with mapzen', async t => {
@@ -50,3 +46,7 @@ test('should fail gracefully with nominatim', async t => {
   const coordinates = await geocode(address, nominatim)
   t.falsy(coordinates)
 })
+
+function round(array) {
+  return _.map(array, elt => _.round(elt, 1))
+}

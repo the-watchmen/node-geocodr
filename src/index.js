@@ -16,7 +16,10 @@ function retryFailedRequest(err) {
 }
 axios.interceptors.response.use(undefined, retryFailedRequest)
 
-export default async function (address, {url, params, addressParam, parse, formatMulti, parseMulti}) {
+export default async function(
+  address,
+  {url, params, addressParam, parse, formatMulti, parseMulti}
+) {
   const timer = new Timer()
   let coordinates
   let _address

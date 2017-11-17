@@ -17,10 +17,8 @@ export default {
     return addresses
   },
   parseMulti: data => {
-    return data.results.map(
-      elt => {
-        return parse(elt.response)
-      }
-    )
+    return data.results.map(elt => {
+      return parse(elt.response)
+    })
   }
 }
