@@ -1,6 +1,6 @@
 {
   "name": "@watchmen/geocodr",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "geocoder",
   "main": "dist/index.js",
   "repository": "the-watchmen/node-geocodr",
